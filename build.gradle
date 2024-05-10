@@ -28,6 +28,11 @@ dependencies {
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    //Oauth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 
     // swagger
@@ -41,9 +46,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     // jwt
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+    implementation 'com.auth0:java-jwt:4.2.1'
 
     // h2
     runtimeOnly 'com.h2database:h2'
@@ -58,7 +61,6 @@ dependencies {
             "jakarta.annotation:jakarta.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
     )
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
 
 tasks.named('test') {

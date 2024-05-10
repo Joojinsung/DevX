@@ -23,4 +23,5 @@ public class UserController {
     public String jwtTest() {
         return "jwtTest 요청 성공";
     }
+
 }

@@ -18,6 +18,7 @@ permissions:
 jobs:
   deploy:
     name: Deploy
+
     runs-on: ubuntu-latest
     environment: production
 
@@ -25,7 +26,7 @@ jobs:
     # (1) 기본 체크아웃
     - name: Checkout
       uses: actions/checkout@v3
-    
+
     # (2) application.properties 설정
     - uses : actions/checkout@v3
     - run: touch ./src/main/resources/application.properties
@@ -74,3 +75,20 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
           --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
+
+    - name: OAuth2_jwt_Key
+      run: |
+        echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+        echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+        echo "JWT_ACCESS_EXPIRATION=${{ secrets.JWT_ACCESS_EXPIRATION }}" >> .env
+        echo "JWT_ACCESS_HEADER=${{ secrets.JWT_ACCESS_HEADER }}" >> .env
+        echo "JWT_REFRESH_EXPIRATION=${{ secrets.JWT_REFRESH_EXPIRATION }}" >> .env
+        echo "JWT_REFRESH_HEADER=${{ secrets.JWT_REFRESH_HEADER }}" >> .env
+        echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
+        echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+        echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> .env
+        echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+        echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+    
+        
+          

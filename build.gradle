@@ -1,0 +1,74 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.backend'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    //Oauth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // jwt
+    implementation 'com.auth0:java-jwt:4.2.1'
+
+    // h2
+    runtimeOnly 'com.h2database:h2'
+    // mysql
+//    runtimeOnly 'com.mysql:mysql-connector-j'
+
+
+    // querydsl
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+    annotationProcessor(
+            "jakarta.persistence:jakarta.persistence-api",
+            "jakarta.annotation:jakarta.annotation-api",
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
+    )
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+tasks.named('bootJar'){
+    mainClass='com.backend.devx.DevXApplication'
+}
+jar {
+    enabled = false
+}

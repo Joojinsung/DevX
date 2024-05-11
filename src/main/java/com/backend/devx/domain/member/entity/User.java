@@ -1,5 +1,6 @@
 package com.backend.devx.domain.member.entity;
 
+import com.backend.devx.domain.board.entity.BoardEntity;
 import com.backend.devx.domain.member.Role;
 import com.backend.devx.domain.member.SocialType;
 import jakarta.persistence.*;
@@ -7,10 +8,13 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
+@Setter
 @Table(name = "USERS")
 @AllArgsConstructor
 public class User {
@@ -32,6 +36,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private SocialType socialType; // KAKAO, NAVER, GOOGLE
+
+
 
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 

@@ -6,9 +6,7 @@ public record RequestBoard(
         Long id,
         String title,
         String content,
-
         Long like,
-        List<String> comment,
         List<String> imageUrls
 ) {
 

@@ -1,7 +1,9 @@
 package com.backend.devx.domain.board.controller;
 
 import com.backend.devx.domain.board.dto.CommentRequest;
+import com.backend.devx.domain.board.dto.CommentUpdateResponseDto;
 import com.backend.devx.domain.board.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,11 +23,17 @@ public class CommentController {
         commentService.addComment(userName.getUsername(), id, request);
     }
 
-    // todo: 댓글 삭제하기
+    //댓글 삭제
+    @DeleteMapping("/comment/delete/{id}")
+    public void deleteComment(@AuthenticationPrincipal UserDetails user, @PathVariable Long id) {
+        commentService.deleteComment(user, id);
+    }
 
-
-    // todo :댓글 수정하기
-
+    //댓글 수정
+    @PutMapping("/comment/update/{id}")
+    public void updateComment(@AuthenticationPrincipal UserDetails user, @PathVariable Long id, @Valid @RequestBody CommentUpdateResponseDto request) {
+        commentService.updateComment(user, id, request);
+    }
 
 
 }

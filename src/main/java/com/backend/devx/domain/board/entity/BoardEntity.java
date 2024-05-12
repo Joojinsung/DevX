@@ -2,6 +2,7 @@ package com.backend.devx.domain.board.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.List;
 
 @Entity
@@ -55,6 +56,10 @@ public class BoardEntity {
     public void updateBoard(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void CountUpdate() {
+        this.viewCount++;
     }
 
 }

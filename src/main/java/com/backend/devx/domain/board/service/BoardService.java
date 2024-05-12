@@ -1,6 +1,7 @@
 package com.backend.devx.domain.board.service;
 
 import com.backend.devx.domain.board.dto.CreateBoard;
+import com.backend.devx.domain.board.dto.DetailBoardResponse;
 import com.backend.devx.domain.board.dto.RequestBoard;
 import com.backend.devx.domain.board.dto.UpdateBoard;
 import com.backend.devx.domain.board.entity.BoardEntity;
@@ -129,6 +130,34 @@ public class BoardService {
         }
 
         boardRepository.deleteById(boardId);
+
+    }
+
+    // 해당 게시글 조회 + 조회수 +1
+    public DetailBoardResponse detailBoard(Long boardId) {
+        BoardEntity board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_BOARD));
+        User userName = userRepository.findById(board.getUserId()).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_MEMBER));
+
+        board.CountUpdate();
+        boardRepository.save(board);
+
+        List<DetailBoardResponse.detailComment> comments = board.getComments().stream()
+                .map(c -> new DetailBoardResponse.detailComment(
+                        c.getUser().getNickname(),
+                        c.getContent()
+                )).toList();
+
+
+        return new DetailBoardResponse(
+                userName.getNickname(),
+                board.getContent(),
+                board.getTitle(),
+                board.getLikeCount(),
+                board.getViewCount(),
+                comments,
+                board.getImages().stream().map(i -> i.getImageUrl()).toList()
+
+        );
 
     }
 

@@ -1,6 +1,7 @@
 package com.backend.devx.domain.board.controller;
 
 import com.backend.devx.domain.board.dto.CreateBoard;
+import com.backend.devx.domain.board.dto.DetailBoardResponse;
 import com.backend.devx.domain.board.dto.RequestBoard;
 import com.backend.devx.domain.board.dto.UpdateBoard;
 import com.backend.devx.domain.board.service.BoardService;
@@ -51,6 +52,12 @@ public class BoardController {
     @GetMapping("/getAllBoald")
     public List<RequestBoard> getData() {
         return boardService.getAll();
+    }
+
+    // 게시글 개별 조회
+    @GetMapping("/detailGet/{id}")
+    public DetailBoardResponse detailBoard(@PathVariable Long id) {
+        return boardService.detailBoard(id);
     }
 }
 

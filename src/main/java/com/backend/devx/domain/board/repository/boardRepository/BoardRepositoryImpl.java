@@ -24,7 +24,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         bord.getTitle(),
                         bord.getContent(),
                         bord.getLikeCount(),
-                        bord.getComments().stream().map(comment -> comment.getContent()).toList(),
                         bord.getImages().stream().map(image -> image.getImageUrl()).toList()
                 ))
                 .collect(Collectors.toList());

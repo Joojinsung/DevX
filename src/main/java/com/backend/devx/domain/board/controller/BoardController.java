@@ -6,6 +6,7 @@ import com.backend.devx.domain.board.dto.RequestBoard;
 import com.backend.devx.domain.board.dto.UpdateBoard;
 import com.backend.devx.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+
 public class BoardController {
 
     private final BoardService boardService;
@@ -33,6 +35,7 @@ public class BoardController {
 
     // 게시글 업데이트
     @PutMapping("/update/{boardId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateItem(@PathVariable Long boardId,
                            @RequestPart(value = "dto") UpdateBoard updateBoard,
                            @RequestPart(value = "file", required = false) List<MultipartFile> multipartFiles,
@@ -42,6 +45,7 @@ public class BoardController {
     }
 
     // 게시글 삭제
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{boardId}")
     public void delete(@PathVariable Long boardId, @AuthenticationPrincipal UserDetails user) {
         boardService.delete(boardId, user.getUsername());
@@ -50,12 +54,14 @@ public class BoardController {
     // 게시글 전체 조회
     // todo : 페이지네이션 추가
     @GetMapping("/getAllBoald")
+    @ResponseStatus(HttpStatus.OK)
     public List<RequestBoard> getData() {
         return boardService.getAll();
     }
 
     // 게시글 개별 조회
     @GetMapping("/detailGet/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public DetailBoardResponse detailBoard(@PathVariable Long id) {
         return boardService.detailBoard(id);
     }

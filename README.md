@@ -71,7 +71,7 @@ Spring Boot로 만든 블로그 프로젝트 입니다.
 </details>
 
 # 📂 패키지 구조
-
+![img_1.png](img_1.png)
 
 # 🔗 REST API 문서
 
